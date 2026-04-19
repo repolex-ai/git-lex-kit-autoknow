@@ -1,0 +1,171 @@
+@prefix lex-o: <https://repolex.ai/ontology/lex-upper/> .
+@prefix autoknow: <https://repolex.ai/ontology/kit/autoknow/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# =============================================================================
+# AUTOKNOW KIT ONTOLOGY
+# =============================================================================
+# Automated knowledge organization from unstructured sources.
+# Subagents read Sources, extract SPO triples, and build typed entity pages.
+#
+# Kit: autoknow
+# Namespace: autoknow: = https://repolex.ai/ontology/kit/autoknow/
+# Extends: lex-o: (upper ontology)
+#
+# Document types (= valid `git lex create` commands):
+#   source, entity
+#
+# The core classes are Source (input) and Entity (output). Additional classes
+# (Person, Project, Tool, etc.) emerge dynamically via extraction — they are
+# NOT predefined here. The Ontologist phase may later formalize them into
+# lex-o extensions.
+#
+# All constraints (required fields, enums, types) are encoded here.
+# SHACL shapes are generated from this file — do not hand-edit shapes.
+# =============================================================================
+
+<https://repolex.ai/ontology/kit/autoknow> a owl:Ontology ;
+    rdfs:label "AutoKnow Kit Ontology" ;
+    rdfs:comment "Automated knowledge organization from unstructured sources via subagent extraction." ;
+    owl:versionInfo "0.1" .
+
+
+# =============================================================================
+# ENUM DATATYPES
+# =============================================================================
+
+autoknow:SourceTypeValue a rdfs:Datatype ;
+    owl:oneOf ("SourceConversation" "SourceDocument" "SourceWebpage" "SourceChat" "SourceEmail" "SourceNote") .
+
+autoknow:ExtractionStatusValue a rdfs:Datatype ;
+    owl:oneOf ("pending" "extracted" "failed" "skipped") .
+
+
+# =============================================================================
+# CLASSES
+# =============================================================================
+
+# --- Source ---
+# A raw input document wrapped as markdown for the extraction pipeline.
+# Sources are never edited after creation — they are frozen primary facts.
+
+autoknow:Source a owl:Class ;
+    rdfs:subClassOf lex-o:Information ;
+    rdfs:label "Source" ;
+    rdfs:comment "A raw input document (conversation, PDF, webpage, etc.) wrapped as markdown. Frozen after creation — never edited. Subagents read Sources and extract knowledge from them." .
+
+# --- Entity ---
+# An auto-generated page describing a single entity discovered across Sources.
+# Created and maintained by the AutoKnow pipeline. May be reviewed by a Soul.
+
+autoknow:Entity a owl:Class ;
+    rdfs:subClassOf lex-o:Information ;
+    rdfs:label "Entity" ;
+    rdfs:comment "An auto-generated page for a single entity (person, project, tool, concept, etc.) discovered by extraction from Sources. Contains a typed description, properties, and relationships." .
+
+
+# =============================================================================
+# SOURCE PROPERTIES
+# =============================================================================
+
+autoknow:sourceId a owl:DatatypeProperty ;
+    rdfs:domain autoknow:Source ;
+    rdfs:range xsd:string ;
+    rdfs:label "sourceId" ;
+    rdfs:comment "Canonical identifier for this Source (e.g. conversation UUID)." .
+
+autoknow:sourceType a owl:DatatypeProperty ;
+    rdfs:domain autoknow:Source ;
+    rdfs:range autoknow:SourceTypeValue ;
+    rdfs:label "sourceType" ;
+    rdfs:comment "What kind of source this is (conversation, document, webpage, etc.)." .
+
+autoknow:name a owl:DatatypeProperty ;
+    rdfs:domain autoknow:Source ;
+    rdfs:range xsd:string ;
+    rdfs:label "name" ;
+    rdfs:comment "Human-readable name or title of the Source." .
+
+autoknow:dateCaptured a owl:DatatypeProperty ;
+    rdfs:domain autoknow:Source ;
+    rdfs:range xsd:dateTime ;
+    rdfs:label "dateCaptured" ;
+    rdfs:comment "When this Source was originally created or captured." .
+
+autoknow:dateUpdated a owl:DatatypeProperty ;
+    rdfs:domain autoknow:Source ;
+    rdfs:range xsd:dateTime ;
+    rdfs:label "dateUpdated" ;
+    rdfs:comment "When this Source was last updated (if applicable)." .
+
+autoknow:messageCount a owl:DatatypeProperty ;
+    rdfs:domain autoknow:Source ;
+    rdfs:range xsd:integer ;
+    rdfs:label "messageCount" ;
+    rdfs:comment "Number of messages in a conversation Source." .
+
+autoknow:extractionStatus a owl:DatatypeProperty ;
+    rdfs:domain autoknow:Source ;
+    rdfs:range autoknow:ExtractionStatusValue ;
+    rdfs:label "extractionStatus" ;
+    rdfs:comment "Whether this Source has been processed by the Extractor." .
+
+
+# =============================================================================
+# ENTITY PROPERTIES
+# =============================================================================
+
+autoknow:entityId a owl:DatatypeProperty ;
+    rdfs:domain autoknow:Entity ;
+    rdfs:range xsd:string ;
+    rdfs:label "entityId" ;
+    rdfs:comment "Canonical identifier for this Entity (kebab-case name)." .
+
+autoknow:entityType a owl:DatatypeProperty ;
+    rdfs:domain autoknow:Entity ;
+    rdfs:range xsd:string ;
+    rdfs:label "entityType" ;
+    rdfs:comment "The auto-discovered class of this Entity (e.g. Person, Project, Tool). Not a fixed enum — classes emerge from extraction." .
+
+autoknow:entityDescription a owl:DatatypeProperty ;
+    rdfs:domain autoknow:Entity ;
+    rdfs:range xsd:string ;
+    rdfs:label "entityDescription" ;
+    rdfs:comment "A 2-4 sentence factual description synthesized from observed facts across Sources." .
+
+autoknow:mentionCount a owl:DatatypeProperty ;
+    rdfs:domain autoknow:Entity ;
+    rdfs:range xsd:integer ;
+    rdfs:label "mentionCount" ;
+    rdfs:comment "Number of source-line mentions across all Sources." .
+
+
+# =============================================================================
+# REQUIRED FIELDS (SHACL generation hints)
+# =============================================================================
+
+autoknow:Source rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty autoknow:sourceId ;
+    owl:minCardinality 1
+] .
+
+autoknow:Source rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty autoknow:sourceType ;
+    owl:minCardinality 1
+] .
+
+autoknow:Entity rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty autoknow:entityId ;
+    owl:minCardinality 1
+] .
+
+autoknow:Entity rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty autoknow:entityType ;
+    owl:minCardinality 1
+] .

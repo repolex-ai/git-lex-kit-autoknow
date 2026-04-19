@@ -1,0 +1,9 @@
+# git-lex kit configuration
+# AutoKnow: automated knowledge organization from unstructured sources.
+
+name: autoknow
+
+# Folder installation — create class folders from the ontology.
+install folders: true
+folder base: AutoKnow
+folder ontology: autoknow.ttl
