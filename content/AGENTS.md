@@ -30,11 +30,13 @@ entities and relationships from unstructured source documents using subagents.
 Source files:
 ```yaml
 autoknow.Source.sourceId: "uuid-or-identifier"
-autoknow.Source.sourceType: "SourceConversation"
-autoknow.Source.name: "Human-readable title"
+autoknow.Source.sourceType: "conversation"
+autoknow.Source.sourceName: "Human-readable title"
 autoknow.Source.dateCaptured: "2024-12-09T05:56:11"
 autoknow.Source.messageCount: 28
 ```
+
+Valid `sourceType` values: `conversation`, `document`, `webpage`, `chat`, `email`, `note`.
 
 Entity files:
 ```yaml
