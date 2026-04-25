@@ -3,6 +3,11 @@
 
 name: autoknow
 
+# Adaptive kit — ontology seeds to _ontology/ and is owned/edited by the
+# AutoKnow subagents (Ontologist) at runtime. SHACL shapes regenerate from
+# _ontology/ on every `git lex save`.
+adaptive: true
+
 # Folder installation — create class folders from the ontology.
 install folders: true
 folder base: AutoKnow

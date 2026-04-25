@@ -28,8 +28,8 @@
 
 <https://repolex.ai/ontology/kit/autoknow> a owl:Ontology ;
     rdfs:label "AutoKnow Kit Ontology" ;
-    rdfs:comment "Automated knowledge organization from unstructured sources via subagent extraction." ;
-    owl:versionInfo "0.2" .
+    rdfs:comment "Automated knowledge organization from unstructured sources via subagent extraction. Adaptive: this file is seeded by the kit and then OWNED and EDITED by the Ontologist subagent at runtime. Lives at _ontology/autoknow/autoknow.ttl in the user repo." ;
+    owl:versionInfo "0.3" .
 
 
 # =============================================================================
