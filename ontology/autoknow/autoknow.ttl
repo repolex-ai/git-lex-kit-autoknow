@@ -1,4 +1,4 @@
-@prefix lex-o: <https://repolex.ai/ontology/lex-upper/> .
+@prefix git-lex: <https://repolex.ai/ontology/git-lex/> .
 @prefix autoknow: <https://repolex.ai/ontology/kit/autoknow/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
@@ -12,7 +12,9 @@
 #
 # Kit: autoknow
 # Namespace: autoknow: = https://repolex.ai/ontology/kit/autoknow/
-# Extends: lex-o: (upper ontology)
+# Foldering: OPT-IN — Source + Entity are authored (git lex create),
+# so each carries git-lex:foldered true. lex-o retired (2026-07-18). See
+# subtexture/docs/ontology/2026_07_18_FOLDERING_GATE_AND_LEX_O_RETIREMENT.md.
 #
 # Document types (= valid `git lex create` commands):
 #   source, entity
@@ -52,7 +54,7 @@ autoknow:ExtractionStatusValue a rdfs:Datatype ;
 # Sources are never edited after creation — they are frozen primary facts.
 
 autoknow:Source a owl:Class ;
-    rdfs:subClassOf lex-o:Information ;
+    git-lex:foldered true ;
     rdfs:label "Source" ;
     rdfs:comment "A raw input document (conversation, PDF, webpage, etc.) wrapped as markdown. Frozen after creation — never edited. Subagents read Sources and extract knowledge from them." ;
     rdfs:subClassOf [
@@ -114,7 +116,7 @@ autoknow:extractionStatus a owl:DatatypeProperty ;
 # Created and maintained by the AutoKnow pipeline. May be reviewed by a Soul.
 
 autoknow:Entity a owl:Class ;
-    rdfs:subClassOf lex-o:Information ;
+    git-lex:foldered true ;
     rdfs:label "Entity" ;
     rdfs:comment "An auto-generated page for a single entity (person, project, tool, concept, etc.) discovered by extraction from Sources. Contains a typed description, properties, and relationships." ;
     rdfs:subClassOf [
