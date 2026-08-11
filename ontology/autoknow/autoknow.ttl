@@ -31,7 +31,16 @@
 <https://repolex.ai/ontology/kit/autoknow> a owl:Ontology ;
     rdfs:label "AutoKnow Kit Ontology" ;
     rdfs:comment "Automated knowledge organization from unstructured sources via subagent extraction. Adaptive: this file is seeded by the kit and then OWNED and EDITED by the Ontologist subagent at runtime. Lives at _ontology/autoknow/autoknow.ttl in the user repo." ;
-    owl:versionInfo "0.3" .
+    owl:versionInfo "0.3.1" .
+
+# v0.3.1 (2026-08-11, Rob-ruled): autoknow:Entity and autoknow:Source declare
+#   `rdfs:subClassOf git-lex:Thing`. git-lex 0.9 introduced the Thing class so
+#   the five universal authored properties (id, title, abstract, cue,
+#   relatedToId) had a domain to attach to rather than being declared
+#   domain-open, which the save gate cannot see. No property, range, or
+#   cardinality changed. NOTE: this file is seeded by the kit and then owned and
+#   edited by the Ontologist subagent at runtime — a runtime regeneration that
+#   does not carry these lines forward will silently un-Thing both classes.
 
 
 # =============================================================================
@@ -54,6 +63,7 @@ autoknow:ExtractionStatusValue a rdfs:Datatype ;
 # Sources are never edited after creation — they are frozen primary facts.
 
 autoknow:Source a owl:Class ;
+    rdfs:subClassOf git-lex:Thing ;
     git-lex:foldered true ;
     rdfs:label "Source" ;
     rdfs:comment "A raw input document (conversation, PDF, webpage, etc.) wrapped as markdown. Frozen after creation — never edited. Subagents read Sources and extract knowledge from them." ;
@@ -116,6 +126,7 @@ autoknow:extractionStatus a owl:DatatypeProperty ;
 # Created and maintained by the AutoKnow pipeline. May be reviewed by a Soul.
 
 autoknow:Entity a owl:Class ;
+    rdfs:subClassOf git-lex:Thing ;
     git-lex:foldered true ;
     rdfs:label "Entity" ;
     rdfs:comment "An auto-generated page for a single entity (person, project, tool, concept, etc.) discovered by extraction from Sources. Contains a typed description, properties, and relationships." ;
