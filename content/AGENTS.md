@@ -32,7 +32,7 @@ Source files:
 autoknow.Source.sourceId: "uuid-or-identifier"
 autoknow.Source.sourceType: "conversation"
 autoknow.Source.sourceName: "Human-readable title"
-autoknow.Source.dateCaptured: "2024-12-09T05:56:11"
+autoknow.Source.capturedDate: "2024-12-09T05:56:11"
 autoknow.Source.messageCount: 28
 ```
 

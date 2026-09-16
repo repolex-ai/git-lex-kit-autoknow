@@ -31,8 +31,18 @@
 <https://repolex.ai/ontology/kit/autoknow> a owl:Ontology ;
     rdfs:label "AutoKnow Kit Ontology" ;
     rdfs:comment "Automated knowledge organization from unstructured sources via subagent extraction. Adaptive: this file is seeded by the kit and then OWNED and EDITED by the Ontologist subagent at runtime. Lives at _ontology/autoknow/autoknow.ttl in the user repo." ;
-    owl:versionInfo "0.3.1" .
+    owl:versionInfo "0.3.2" .
 
+# v0.3.2 (2026-09-16, ruled by goodlux): every date property is named
+#   `<what>Date`, type at the end, across every kit. autoknow:dateCaptured is
+#   now autoknow:capturedDate and autoknow:dateUpdated is autoknow:updatedDate.
+#   Frontmatter keys follow (autoknow.Source.capturedDate, .updatedDate).
+#   Lands with git-lex-kit-base 0.18.0, which renames the universals
+#   git-lex:dateCreated / dateUpdated to createdDate / updatedDate. No range,
+#   domain or cardinality changed. Not done here: rewriting existing Source
+#   documents; the base kit's reader accepts the old keys for one release
+#   and warns with the new line to write.
+#
 # v0.3.1 (2026-08-11, Rob-ruled): autoknow:Entity and autoknow:Source declare
 #   `rdfs:subClassOf git-lex:Thing`. git-lex 0.9 introduced the Thing class so
 #   the five universal authored properties (id, title, abstract, cue,
@@ -96,14 +106,14 @@ autoknow:sourceName a owl:DatatypeProperty ;
     rdfs:domain autoknow:Source ;
     rdfs:range xsd:string .
 
-autoknow:dateCaptured a owl:DatatypeProperty ;
-    rdfs:label "date captured" ;
+autoknow:capturedDate a owl:DatatypeProperty ;
+    rdfs:label "captured date" ;
     rdfs:comment "When this Source was originally created or captured." ;
     rdfs:domain autoknow:Source ;
     rdfs:range xsd:dateTime .
 
-autoknow:dateUpdated a owl:DatatypeProperty ;
-    rdfs:label "date updated" ;
+autoknow:updatedDate a owl:DatatypeProperty ;
+    rdfs:label "updated date" ;
     rdfs:comment "When this Source was last updated (if applicable)." ;
     rdfs:domain autoknow:Source ;
     rdfs:range xsd:dateTime .
